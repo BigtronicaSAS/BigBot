@@ -1,4 +1,4 @@
-#include <Curiosity.h>
+#include <Bigbot.h>
 #define MaximaDistancia 30
 
 /*Velocidad Bigbot Magic: 255*/

@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#include "Curiosity.h"
+#include "Bigbot.h"
 
 
 Bot::Bot(){

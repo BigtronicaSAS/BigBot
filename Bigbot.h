@@ -3,8 +3,8 @@
   Creado por Juan Camilo Alvarez.
   Version: 1.0V
 */
-#ifndef Curiosity_h
-#define Curiosity_h
+#ifndef Bigbot_h
+#define Bigbot_h
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>

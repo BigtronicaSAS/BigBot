@@ -1,4 +1,4 @@
-#include <Curiosity.h>
+#include <Bigbot.h>
 #define pin_clock     A3
 #define pin_command   A1
 #define pin_attention A0
