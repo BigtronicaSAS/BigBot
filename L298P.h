@@ -15,9 +15,17 @@ public:
     void girar_derecha(int velocidad);
     void girar_izquierda(int velocidad);
     void parar();
-    void pitar();
     float detectar_obstaculo();
     void obstaculos(int MaximaDistancia, int velocidad);
-}
+
+private:
+    int MotorA_speed;
+    int MotorA_direction;
+    int MotorB_speed;
+    int MotorB_direction;
+    int pin_echo;
+    int pin_trigger;
+    int pin_buzzer;
+};
 
 #endif

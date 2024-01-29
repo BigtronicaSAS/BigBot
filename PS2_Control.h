@@ -10,6 +10,12 @@ class PS2C : public PS2X
 public:
     PS2C(int _pin_clock, int _pin_command, int _pin_attention, int _pin_data);
     void begin();
-}
+
+private:
+    int pin_clock;
+    int pin_command;
+    int pin_attention; 
+    int pin_data;
+};
 
 #endif

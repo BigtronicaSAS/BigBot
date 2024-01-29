@@ -41,10 +41,7 @@ void L298P::girar_izquierda(int velocidad)
     analogWrite(MotorB_speed, (velocidad));
 }
 
-void L298P::pitar()
-{
-    digitalWrite(pin_buzzer, Button(PSB_CIRCLE) ? HIGH : LOW);
-}
+
 
 void L298P::adelante(int velocidad)
 {
