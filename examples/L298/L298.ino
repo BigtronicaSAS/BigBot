@@ -1,44 +1,47 @@
 #include <Bigbot.h>
-#define MotorA_speed 10
-#define MotorA_direction 12
-#define MotorB_speed 11
-#define MotorB_direction 13
-#define pin_echo 8
-#define pin_trigger 7
-#define pin_buzzer 4
-Bot bot(MotorA_speed, MotorA_direction, MotorB_speed, MotorB_direction,
-        pin_echo, pin_trigger, pin_buzzer);
+#include "Bluetooth.h"
+
+//Pinout BotARDUINO = {10, 12, 11, 13, 8, 7, 4};
+Pinout BotESP32 = {5, 19, 23, 18, 12, 14, 17};
+
+Bot bot(BotESP32);
+BluetoothSerial BT; 
+int bt_data;
 
 void setup()
 {
-    Serial.begin(9600);
+  Serial.begin(9600); 
+  BT.begin("BIGBOT"); 
+  Serial.println("El dispositivo Bluetooth está listo para emparejarse");
 }
 
 void loop()
 {
-    if (Serial.available() > 0)
+  if (BT.available())
+  {
+    bt_data = BT.read();
+    Serial.print("Recibido: ");
+    Serial.println(bt_data);
+    if (bt_data == 70)
     {
-        bt_data = Serial.read();
-        Serial.println(bt_data);
+      bot.adelante(255);
     }
-    if (bt_data == 1)
+    else if (bt_data == 66)
     {
-        bot.adelante(255);
+      bot.atras(255);
     }
-    else if (bt_data == 2)
+    else if (bt_data == 76)
     {
-        bot.atras(255);
+      bot.girar_izquierda(255);
     }
-    else if (bt_data == 3)
+    else if (bt_data == 82)
     {
-        bot.girar_izquierda(255);
+      bot.girar_derecha(255);
     }
-    else if (bt_data == 4)
+    else if (bt_data == 83)
     {
-        bot.girar_derecha(255);
+      bot.parar();
     }
-    else if (bt_data == 5)
-    {
-        bot.parar();
-    }
+  }
+
 }

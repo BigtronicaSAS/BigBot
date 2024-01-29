@@ -24,6 +24,11 @@ L298P::L298P(int _MotorA_speed, int _MotorA_direction, int _MotorB_speed, int _M
     digitalWrite(pin_buzzer, LOW);
 }
 
+void L298P::pitar(){
+digitalWrite(pin_buzzer, HIGH);
+  delay(1000);
+}
+
 void L298P::girar_derecha(int velocidad)
 {
 

@@ -15,6 +15,7 @@ public:
     void girar_derecha(int velocidad);
     void girar_izquierda(int velocidad);
     void parar();
+    void pitar();
     float detectar_obstaculo();
     void obstaculos(int MaximaDistancia, int velocidad);
 

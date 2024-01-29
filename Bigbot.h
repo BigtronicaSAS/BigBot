@@ -7,14 +7,30 @@
 #define Bigbot_h
 
 #include <Arduino.h>
-#include <SoftwareSerial.h>
 #include <L298P.h>
 
-class Bot : public L298P
-{
+struct Pinout {
+    int MotorA_speed;
+    int MotorA_direction;
+    int MotorB_speed;
+    int MotorB_direction;
+    int pin_echo;
+    int pin_trigger;
+    int pin_buzzer;
+};
+
+class Bot : public L298P {
 public:
-	Bot(int _MotorA_speed, int _MotorA_direction, int _MotorB_speed, int _MotorB_direction,
-		int _pin_echo, int _pin_trigger, int _pin_buzzer);
+    Bot(const Pinout& pinout);
+
+private:
+    int MotorA_speed;
+    int MotorA_direction;
+    int MotorB_speed;
+    int MotorB_direction;
+    int pin_echo;
+    int pin_trigger;
+    int pin_buzzer;
 };
 
 #endif
