@@ -2,6 +2,8 @@
 # Syntax Coloring Bigbot
 #######################################
 Bot	            KEYWORD1
+ESP32           KEYWORD1
+ARDUINO         KEYWORD1
 seguidor        KEYWORD2
 adelante        KEYWORD2
 atras	        KEYWORD2

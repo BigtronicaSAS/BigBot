@@ -8,32 +8,13 @@
 
 #include <Arduino.h>
 #include <SoftwareSerial.h>
-#include "PS2X_lib.h"
+#include <L298P.h>
 
-
-class Bot : public PS2X {
-  public:
-    Bot();
-	void seguidor(int Left, int Center, int Right, int velocidad);
-	void adelante(int velocidad);
-	void atras(int velocidad);
-	void girar_derecha(int velocidad);
-	void girar_izquierda(int velocidad);
-	void parar();
-	void pitar();
-	float detectar_obstaculo();
-	void obstaculos(int MaximaDistancia, int velocidad);
-	void controlPS2(int pin_clock , int pin_command, int pin_attention, int pin_data);
-	void carPS2(int velocidad);
-	
-  private:
-	int MotorA_speed;
-    int MotorA_direction;
-    int MotorB_speed;
-    int MotorB_direction;
-	int pin_echo;
-	int pin_trigger;
-	int pin_buzzer;
+class Bot : public L298P
+{
+public:
+	Bot(int _MotorA_speed, int _MotorA_direction, int _MotorB_speed, int _MotorB_direction,
+		int _pin_echo, int _pin_trigger, int _pin_buzzer);
 };
 
 #endif
