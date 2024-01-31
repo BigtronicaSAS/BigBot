@@ -6,6 +6,13 @@
 #ifndef Bigbot_h
 #define Bigbot_h
 
+
+#ifdef ARDUINO
+  #include <PS2X_lib.h>
+#elif defined(ESP32)
+  #include <Ps3Controller.h>
+#endif
+
 #include <Arduino.h>
 #include <L298P.h>
 
