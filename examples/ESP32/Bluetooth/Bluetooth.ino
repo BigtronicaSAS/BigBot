@@ -2,9 +2,10 @@
 #include "Bluetooth.h"
 
 // Bot bot(BIGBOT_ARDUINO);  // Descomentar Bigbot Arduino
-Bot bot(BIGBOT_ARDUINO);
+Bot bot(BIGBOT_ESP32);
 
 BluetoothSerial BT; 
+
 int bt_data;
 
 void setup()
