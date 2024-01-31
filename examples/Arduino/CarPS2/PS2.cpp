@@ -11,8 +11,8 @@ pin_data = A2;
 
 
 void Command::init(){
+  Serial.begin(9600);
   int error = 0;
-
   error = config_gamepad(pin_clock , pin_command, pin_attention, pin_data, true, true);
   if(error == 0)
   {
@@ -22,7 +22,7 @@ void Command::init(){
   {
     Serial.println("Error, mando no encontrado");
   }
-  Serial.begin(9600);
+  
 }
 
 void Command::car(Bot &bot, int velocidad){

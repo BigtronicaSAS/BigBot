@@ -2,6 +2,7 @@
 #define PS2_h
 
 #include <PS2X_lib.h>
+#include <Bigbot.h>
 
 class Command : public PS2X {
 public:
@@ -13,7 +14,7 @@ private:
   int pin_clock;
   int pin_command;
   int pin_attention;
-  int pin_data
+  int pin_data;
 };
 
 #endif
