@@ -7,10 +7,7 @@
 /*Velocidad Bigbot 4WD: 180*/
 // #define Velocidad 180 
 
-Pinout BotARDUINO = {10, 12, 11, 13, 8, 7, 4};
-//Pinout BotESP32 = {5, 19, 23, 18, 12, 14, 17};
-
-Bot bot(BotARDUINO);
+Bot bot(BIGBOT_ARDUINO);
 
 void setup() {
   Serial.begin(9600);

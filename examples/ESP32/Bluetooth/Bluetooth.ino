@@ -1,10 +1,9 @@
 #include <Bigbot.h>
 #include "Bluetooth.h"
 
-//Pinout BotARDUINO = {10, 12, 11, 13, 8, 7, 4};
-Pinout BotESP32 = {5, 19, 23, 18, 12, 14, 17};
+// Bot bot(BIGBOT_ARDUINO);  // Descomentar Bigbot Arduino
+Bot bot(BIGBOT_ARDUINO);
 
-Bot bot(BotESP32);
 BluetoothSerial BT; 
 int bt_data;
 

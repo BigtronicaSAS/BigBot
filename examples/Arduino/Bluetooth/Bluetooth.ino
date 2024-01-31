@@ -1,9 +1,8 @@
 #include <Bigbot.h>
 #include "Bluetooth.h"
 
-Pinout BotARDUINO = {10, 12, 11, 13, 8, 7, 4};
+Bot bot(BIGBOT_ARDUINO);
 
-Bot bot(BotARDUINO);
 int bt_data;
 
 void setup()
