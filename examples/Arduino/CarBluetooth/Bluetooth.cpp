@@ -1,25 +1,24 @@
-#include <Bigbot.h>
+#include <Arduino.h>
+#include <SoftwareSerial.h>
 #include "Bluetooth.h"
 
-// Bot bot(BIGBOT_ARDUINO);  // Descomentar Bigbot Arduino
-Bot bot(BIGBOT_ESP32);
 
-BluetoothSerial BT; 
+BT::BT(int pin_TX, int pin_RX) : SoftwareSerial(pin_TX, pin_RX) {
+    this->pin_TX = pin_TX;
+    this->pin_RX = pin_RX;
+}
 
-int bt_data;
-
-void setup()
-{
+void BT::init() {
   Serial.begin(9600); 
-  BT.begin("BIGBOT"); 
+  begin(9600); 
   Serial.println("El dispositivo Bluetooth está listo para emparejarse");
 }
 
-void loop()
-{
-  if (BT.available())
+void BT::car(Bot &bot, int velocidad) {
+int bt_data;
+if (available())
   {
-    bt_data = BT.read();
+    bt_data = read();
     Serial.print("Recibido: ");
     Serial.println(bt_data);
     if (bt_data == 70)
@@ -43,5 +42,4 @@ void loop()
       bot.parar();
     }
   }
-
 }

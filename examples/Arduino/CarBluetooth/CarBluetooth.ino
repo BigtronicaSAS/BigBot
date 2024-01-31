@@ -1,16 +1,16 @@
 #include <Bigbot.h>
-#include "PS2.h"
+#include "Bluetooth.h"
 #define Velocidad 255
 
-Command PS2;
+BT bluetooth(0, 1);
 Bot bot(BIGBOT_ARDUINO);
 
 void setup()
 {
-  PS2.init();
+  bluetooth.init();
 }
 
 void loop()
 {
-  PS2.car(bot, Velocidad);
+  bluetooth.car(bot, Velocidad);
 }
