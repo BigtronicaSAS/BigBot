@@ -1,7 +1,7 @@
 #ifndef PS2_h
 #define PS2_h
 
-#include <PS2X_lib.h>
+#include "PS2X_lib.h"
 #include <Bigbot.h>
 
 class Command : public PS2X {
