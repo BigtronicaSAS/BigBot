@@ -10,10 +10,38 @@
 #include <SoftwareSerial.h>
 #include "PS2X_lib.h"
 
+struct Motion
+{
+	bool MotorA, MotorB;
+};
 
-class Bot : public PS2X {
-  public:
-    Bot();
+struct Shield
+{
+	int MotorA_speed,
+		MotorA_direction,
+		MotorB_speed,
+		MotorB_direction,
+		pin_echo,
+		pin_trigger,
+		pin_buzzer;
+};
+
+struct Bigbot
+{
+	Shield l298P;
+	Motion Derecha;
+	Motion Izquierda;
+	Motion Adelante;
+	Motion Atras;
+};
+
+extern Bigbot MAGIC;
+extern Bigbot SOCCER;
+
+class Bot : public PS2X
+{
+public:
+	Bot(Bigbot &bigbot);
 	void seguidor(int Left, int Center, int Right, int velocidad);
 	void adelante(int velocidad);
 	void atras(int velocidad);
@@ -23,17 +51,21 @@ class Bot : public PS2X {
 	void pitar();
 	float detectar_obstaculo();
 	void obstaculos(int MaximaDistancia, int velocidad);
-	void controlPS2(int pin_clock , int pin_command, int pin_attention, int pin_data);
+	void controlPS2(int pin_clock, int pin_command, int pin_attention, int pin_data);
 	void carPS2(int velocidad);
-	
-  private:
+
+private:
 	int MotorA_speed;
-    int MotorA_direction;
-    int MotorB_speed;
-    int MotorB_direction;
+	int MotorA_direction;
+	int MotorB_speed;
+	int MotorB_direction;
 	int pin_echo;
 	int pin_trigger;
 	int pin_buzzer;
+	Motion Derecha;
+	Motion Izquierda;
+	Motion Adelante;
+	Motion Atras;
 };
 
 #endif

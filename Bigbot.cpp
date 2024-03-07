@@ -2,15 +2,35 @@
 #include <SoftwareSerial.h>
 #include "Bigbot.h"
 
-Bot::Bot()
+Bigbot SOCCER = {
+    .l298P = {
+        .MotorA_speed = 10,
+        .MotorA_direction = 12,
+        .MotorB_speed = 11,
+        .MotorB_direction = 13,
+        .pin_echo = 8,
+        .pin_trigger = 7,
+        .pin_buzzer = 4},
+
+    .Derecha = {.MotorA = true, .MotorB = false},
+    .Izquierda = {.MotorA = false, .MotorB = true},
+    .Adelante = {.MotorA = true, .MotorB = true},
+    .Atras = {.MotorA = false, .MotorB = false}
+};
+
+Bot::Bot(Bigbot &bigbot)
+    : MotorA_speed(bigbot.l298P.MotorA_speed),
+      MotorA_direction(bigbot.l298P.MotorA_direction),
+      MotorB_speed(bigbot.l298P.MotorB_speed),
+      MotorB_direction(bigbot.l298P.MotorB_direction),
+      pin_echo(bigbot.l298P.pin_echo),
+      pin_trigger(bigbot.l298P.pin_trigger),
+      pin_buzzer(bigbot.l298P.pin_buzzer),
+      Derecha(bigbot.Derecha),
+      Izquierda(bigbot.Izquierda),
+      Adelante(bigbot.Adelante),
+      Atras(bigbot.Atras)
 {
-  pin_echo = 8;
-  pin_trigger = 7;
-  pin_buzzer = 4;
-  MotorA_speed = 10;
-  MotorA_direction = 12;
-  MotorB_speed = 11;
-  MotorB_direction = 13;
   Serial.begin(9600);
   pinMode(pin_echo, INPUT);
   pinMode(pin_trigger, OUTPUT);
@@ -26,16 +46,16 @@ Bot::Bot()
 void Bot::girar_derecha(int velocidad)
 {
 
-  digitalWrite(MotorA_direction, LOW);
-  digitalWrite(MotorB_direction, HIGH);
+  digitalWrite(MotorA_direction, Derecha.MotorA);
+  digitalWrite(MotorB_direction, Derecha.MotorB);
   analogWrite(MotorA_speed, (velocidad));
   analogWrite(MotorB_speed, (velocidad));
 }
 
 void Bot::girar_izquierda(int velocidad)
 {
-  digitalWrite(MotorA_direction, HIGH);
-  digitalWrite(MotorB_direction, LOW);
+  digitalWrite(MotorA_direction, Izquierda.MotorA);
+  digitalWrite(MotorB_direction, Izquierda.MotorB);
   analogWrite(MotorA_speed, (velocidad));
   analogWrite(MotorB_speed, (velocidad));
 }
@@ -47,16 +67,16 @@ void Bot::pitar()
 
 void Bot::adelante(int velocidad)
 {
-  digitalWrite(MotorA_direction, LOW);
-  digitalWrite(MotorB_direction, LOW);
+  digitalWrite(MotorA_direction, Adelante.MotorA);
+  digitalWrite(MotorB_direction, Adelante.MotorB);
   analogWrite(MotorA_speed, (velocidad));
   analogWrite(MotorB_speed, (velocidad));
 }
 
 void Bot::atras(int velocidad)
 {
-  digitalWrite(MotorA_direction, HIGH);
-  digitalWrite(MotorB_direction, HIGH);
+  digitalWrite(MotorA_direction, Atras.MotorA);
+  digitalWrite(MotorB_direction, Atras.MotorB);
   analogWrite(MotorA_speed, (velocidad));
   analogWrite(MotorB_speed, (velocidad));
 }
@@ -135,7 +155,7 @@ void Bot::controlPS2(int pin_clock, int pin_command, int pin_attention, int pin_
 {
   int error = 0;
 
-  error = config_gamepad(pin_clock, pin_command, pin_attention, pin_data, true, true);
+  error = config_gamepad( pin_clock, pin_command, pin_attention, pin_data, true, true);
   if (error == 0)
   {
     Serial.println("Controlador encontrado y configurado");
