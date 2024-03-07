@@ -163,6 +163,8 @@ public:
 boolean Button(uint16_t);
 unsigned int ButtonDataByte();
 boolean NewButtonState();
+boolean BothButtons(uint16_t button1, uint16_t button2);
+boolean Turbo(uint16_t button);
 boolean NewButtonState(unsigned int);
 boolean ButtonPressed(unsigned int);
 boolean ButtonReleased(unsigned int);

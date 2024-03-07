@@ -3,7 +3,7 @@
 #define pin_command   A1
 #define pin_attention A0
 #define pin_data      A2
-#define Velocidad 255
+#define Velocidad 120
 Bot bot;
 
 void setup() {

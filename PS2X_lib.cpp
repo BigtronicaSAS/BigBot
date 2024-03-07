@@ -32,6 +32,12 @@ boolean PS2X::ButtonPressed(unsigned int button) {
   return(NewButtonState(button) & Button(button));
 }
 
+boolean PS2X::BothButtons(uint16_t button1, uint16_t button2){
+ return((Button(button1)) && (Button(button2))); 
+}
+boolean PS2X::Turbo(uint16_t button){
+ return((Button(button)) && (Button(PSB_R2))); 
+}
 boolean PS2X::ButtonReleased(unsigned int button) {
   return((NewButtonState(button)) & ((~last_buttons & button) > 0));
 }
