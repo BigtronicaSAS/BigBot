@@ -30,7 +30,9 @@ Bigbot SOCCER = {
     .Derecha = {.MotorA = false, .MotorB = true},
     .Izquierda = {.MotorA = true, .MotorB = false},
     .Adelante = {.MotorA = false, .MotorB = false},
-    .Atras = {.MotorA = true, .MotorB = true}};  
+    .Atras = {.MotorA = true, .MotorB = true}};
+
+   Bigbot MAGIC_4WD = SOCCER;   
 
 Bot::Bot(Bigbot &bigbot)
     : MotorA_speed(bigbot.l298P.MotorA_speed),
@@ -126,16 +128,8 @@ void Bot::obstaculos(int MaximaDistancia, int velocidad)
   if (distance > 0)
   {
     if (distance < MaximaDistancia)
-    {
-      if (distance > (MaximaDistancia / 2))
-      {
-        atras(velocidad);
-        delay(200);
-        parar();
+    {   parar();
         delay(500);
-      }
-      else
-      {
         // Generar un número aleatorio para decidir la dirección de giro
         randomNumber = random(1, 3);
         if (randomNumber == 1)
@@ -152,7 +146,6 @@ void Bot::obstaculos(int MaximaDistancia, int velocidad)
           parar();
           delay(500);
         }
-      }
     }
     else
     {

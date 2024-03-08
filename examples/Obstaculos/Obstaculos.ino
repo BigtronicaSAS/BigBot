@@ -2,10 +2,11 @@
 #define MaximaDistancia 30
 
 /*Velocidad Bigbot Magic: 255*/
-#define Velocidad 255
+
+//#define Velocidad 255
 
 /*Velocidad Bigbot 4WD: 180*/
-// #define Velocidad 180 
+#define Velocidad 100 
 
 Bot bot(MAGIC);
 void setup() {

@@ -37,6 +37,7 @@ struct Bigbot
 
 extern Bigbot MAGIC;
 extern Bigbot SOCCER;
+extern Bigbot MAGIC_4WD;
 
 class Bot : public PS2X
 {
