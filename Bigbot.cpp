@@ -15,8 +15,22 @@ Bigbot SOCCER = {
     .Derecha = {.MotorA = true, .MotorB = false},
     .Izquierda = {.MotorA = false, .MotorB = true},
     .Adelante = {.MotorA = true, .MotorB = true},
-    .Atras = {.MotorA = false, .MotorB = false}
-};
+    .Atras = {.MotorA = false, .MotorB = false}};
+
+ Bigbot MAGIC ={
+    .l298P = {
+        .MotorA_speed = 10,
+        .MotorA_direction = 12,
+        .MotorB_speed = 11,
+        .MotorB_direction = 13,
+        .pin_echo = 8,
+        .pin_trigger = 7,
+        .pin_buzzer = 4},
+
+    .Derecha = {.MotorA = false, .MotorB = true},
+    .Izquierda = {.MotorA = true, .MotorB = false},
+    .Adelante = {.MotorA = false, .MotorB = false},
+    .Atras = {.MotorA = true, .MotorB = true}};  
 
 Bot::Bot(Bigbot &bigbot)
     : MotorA_speed(bigbot.l298P.MotorA_speed),
@@ -155,7 +169,7 @@ void Bot::controlPS2(int pin_clock, int pin_command, int pin_attention, int pin_
 {
   int error = 0;
 
-  error = config_gamepad( pin_clock, pin_command, pin_attention, pin_data, true, true);
+  error = config_gamepad(pin_clock, pin_command, pin_attention, pin_data, true, true);
   if (error == 0)
   {
     Serial.println("Controlador encontrado y configurado");
@@ -175,9 +189,10 @@ void Bot::carPS2(int velocidad)
   pitar();
   if (Turbo(PSB_PAD_UP))
   {
-    adelante(255);
+    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(255) :adelante(255);
     Serial.print("TurboAdelante");
   }
+
   else if (Turbo(PSB_PAD_RIGHT))
   {
     girar_derecha(255);
@@ -192,12 +207,33 @@ void Bot::carPS2(int velocidad)
 
   else if (Turbo(PSB_PAD_DOWN))
   {
-    atras(255);
+    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(255) :atras(255);
     Serial.print("TurboAtras");
   }
+  else if (BothButtons(PSB_PAD_UP, PSB_R1))
+  {
+    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(180) :adelante(180);
+    Serial.print("VmediaAdelante");
+  }
+  else if (BothButtons(PSB_PAD_DOWN, PSB_R1))
+  {
+    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(180) :atras(180);
+    Serial.print("VmediaAtras");
+  }
+  else if (BothButtons(PSB_PAD_LEFT, PSB_R1))
+  {
+    girar_izquierda(180);
+    Serial.print("VmediaIzquierda");
+  }
+  else if (BothButtons(PSB_PAD_RIGHT, PSB_R1))
+  {
+    girar_derecha(180);
+    Serial.print("VmediaDerecha");
+  }
+
   else if (Button(PSB_PAD_UP))
   {
-    adelante(velocidad);
+    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(velocidad) :adelante(velocidad);
     Serial.print("Adelante");
   }
 
@@ -214,7 +250,7 @@ void Bot::carPS2(int velocidad)
   }
   else if (Button(PSB_PAD_DOWN))
   {
-    atras(velocidad);
+    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(velocidad) :atras(velocidad);
     Serial.print("atras");
   }
 
@@ -245,24 +281,20 @@ void Bot::seguidor(int Left, int Center, int Right, int velocidad)
   }
   else if ((IR_izquierda == negro) && (IR_centro == negro) && (IR_derecha == blanco))
   {
-    girar_derecha(velocidad);
-    Serial.println("derecha");
+    girar_izquierda(velocidad);
   }
   else if ((IR_izquierda == negro) && (IR_centro == blanco) && (IR_derecha == blanco))
   {
-    girar_derecha(velocidad);
-    Serial.println("derecha");
+    girar_izquierda(velocidad);
   }
 
-  else if ((IR_izquierda == blanco) && (IR_centro == negro) && (IR_derecha == negro))
-  {
-    girar_izquierda(velocidad);
-    Serial.println("Izquierda");
-  }
   else if ((IR_izquierda == blanco) && (IR_centro == blanco) && (IR_derecha == negro))
   {
-    girar_izquierda(velocidad);
-    Serial.println("Izquierda");
+    girar_derecha(velocidad);
+  }
+  else if ((IR_izquierda == blanco) && (IR_centro == negro) && (IR_derecha == negro))
+  {
+     girar_derecha(velocidad);
   }
   else if ((IR_izquierda == blanco) && (IR_centro == blanco) && (IR_derecha == blanco))
   {

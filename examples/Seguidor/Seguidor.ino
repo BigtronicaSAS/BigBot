@@ -7,7 +7,7 @@
 /*Velocidad Bigbot 4WD: 180*/
 // #define Velocidad 180 
 
-Bot bot;
+Bot bot(MAGIC);
 
 void setup() {
   Serial.begin(9600);

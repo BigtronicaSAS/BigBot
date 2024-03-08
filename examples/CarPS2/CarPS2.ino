@@ -3,7 +3,8 @@
 #define pin_command   A1
 #define pin_attention A0
 #define pin_data      A2
-#define Velocidad 120
+#define Velocidad 100
+// Bot bot(MAGIC) 
 Bot bot(SOCCER);
 
 void setup() {
