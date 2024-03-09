@@ -1,19 +1,12 @@
 #include <Bigbot.h>
-#define pin_clock     A3
-#define pin_command   A1
-#define pin_attention A0
-#define pin_data      A2
-#define Velocidad 100
-/* Descomentar segun su plataforma */
+// #define CAR MAGIC
+// #define CAR MAGIC_4WD
+#define CAR SOCCER
 
-//Bot bot(MAGIC)
-//Bot bot (MAGIC_4WD)
-Bot bot(SOCCER);
-
+Bot bot(CAR);
 void setup() {
-  bot.controlPS2(pin_clock , pin_command, pin_attention, pin_data);
+PS2(bot);
 }
 
 void loop() {
-  bot.carPS2(Velocidad);
 }

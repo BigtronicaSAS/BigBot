@@ -321,3 +321,57 @@ bool Bot::toggle(int switchPin)
   lastToggleState = currentToggleState;
   return toggleState;
 }
+
+void Start(Bot &bot) {
+  const int Right = A0;
+  const int Center = A1;
+  const int Left = A2;
+  const int Velocidad = 100;
+  const int Switch = A4;
+ 
+  Serial.begin(9600);
+  pinMode(Right, INPUT);
+  pinMode(Center, INPUT);
+  pinMode(Left, INPUT);
+  pinMode(Switch, INPUT_PULLUP);
+
+  do {
+    bool state = bot.toggle(Switch);
+
+    if (!state) {
+      Serial.println("Modo Ultrasonido");
+      bot.obstaculos(30, Velocidad);
+    } else {
+      Serial.println("Modo seguidor de linea");
+      bot.seguidor(Left, Center, Right, Velocidad);
+    }
+
+  } while (true);
+}
+
+
+void PS2(Bot &bot) {
+  int pin_clock = A3;
+  int pin_command = A1;
+  int pin_attention = A0;
+  int pin_data = A2;
+  int Velocidad = 100;
+  int MaximaDistancia = 30;
+  const int Switch = A4;
+  bot.controlPS2(pin_clock , pin_command, pin_attention, pin_data);
+  
+
+  do {
+    bool state = bot.toggle(Switch);
+
+    if (!state) {
+      Serial.println("Modo PS2");
+      bot.carPS2(Velocidad);
+      
+    } else {
+      Serial.println("Modo Obstaculos");
+      bot.obstaculos(MaximaDistancia, Velocidad);
+    }
+
+  } while (true);
+}

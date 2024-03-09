@@ -69,5 +69,7 @@ private:
 	Motion Adelante;
 	Motion Atras;
 };
+void Start(Bot &bot);
+void PS2(Bot &bot);
 
 #endif
