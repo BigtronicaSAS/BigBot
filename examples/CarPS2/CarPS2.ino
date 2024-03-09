@@ -4,7 +4,10 @@
 #define pin_attention A0
 #define pin_data      A2
 #define Velocidad 100
-// Bot bot(MAGIC) 
+/* Descomentar segun su plataforma */
+
+//Bot bot(MAGIC)
+//Bot bot (MAGIC_4WD)
 Bot bot(SOCCER);
 
 void setup() {
@@ -12,5 +15,5 @@ void setup() {
 }
 
 void loop() {
-bot.carPS2(Velocidad); 
+  bot.carPS2(Velocidad);
 }

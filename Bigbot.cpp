@@ -17,7 +17,7 @@ Bigbot SOCCER = {
     .Adelante = {.MotorA = true, .MotorB = true},
     .Atras = {.MotorA = false, .MotorB = false}};
 
- Bigbot MAGIC ={
+Bigbot MAGIC = {
     .l298P = {
         .MotorA_speed = 10,
         .MotorA_direction = 12,
@@ -32,7 +32,7 @@ Bigbot SOCCER = {
     .Adelante = {.MotorA = false, .MotorB = false},
     .Atras = {.MotorA = true, .MotorB = true}};
 
-   Bigbot MAGIC_4WD = SOCCER;   
+Bigbot MAGIC_4WD = SOCCER;
 
 Bot::Bot(Bigbot &bigbot)
     : MotorA_speed(bigbot.l298P.MotorA_speed),
@@ -128,24 +128,25 @@ void Bot::obstaculos(int MaximaDistancia, int velocidad)
   if (distance > 0)
   {
     if (distance < MaximaDistancia)
-    {   parar();
+    {
+      parar();
+      delay(500);
+      // Generar un número aleatorio para decidir la dirección de giro
+      randomNumber = random(1, 3);
+      if (randomNumber == 1)
+      {
+        girar_izquierda(velocidad);
+        delay(400);
+        parar();
         delay(500);
-        // Generar un número aleatorio para decidir la dirección de giro
-        randomNumber = random(1, 3);
-        if (randomNumber == 1)
-        {
-          girar_izquierda(velocidad);
-          delay(400);
-          parar();
-          delay(500);
-        }
-        else
-        {
-          girar_derecha(velocidad);
-          delay(400);
-          parar();
-          delay(500);
-        }
+      }
+      else
+      {
+        girar_derecha(velocidad);
+        delay(400);
+        parar();
+        delay(500);
+      }
     }
     else
     {
@@ -182,7 +183,7 @@ void Bot::carPS2(int velocidad)
   pitar();
   if (Turbo(PSB_PAD_UP))
   {
-    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(255) :adelante(255);
+    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(255) : adelante(255);
     Serial.print("TurboAdelante");
   }
 
@@ -200,17 +201,17 @@ void Bot::carPS2(int velocidad)
 
   else if (Turbo(PSB_PAD_DOWN))
   {
-    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(255) :atras(255);
+    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(255) : atras(255);
     Serial.print("TurboAtras");
   }
   else if (BothButtons(PSB_PAD_UP, PSB_R1))
   {
-    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(180) :adelante(180);
+    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(180) : adelante(180);
     Serial.print("VmediaAdelante");
   }
   else if (BothButtons(PSB_PAD_DOWN, PSB_R1))
   {
-    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(180) :atras(180);
+    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(180) : atras(180);
     Serial.print("VmediaAtras");
   }
   else if (BothButtons(PSB_PAD_LEFT, PSB_R1))
@@ -226,7 +227,7 @@ void Bot::carPS2(int velocidad)
 
   else if (Button(PSB_PAD_UP))
   {
-    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(velocidad) :adelante(velocidad);
+    BothButtons(PSB_PAD_UP, PSB_L1) ? atras(velocidad) : adelante(velocidad);
     Serial.print("Adelante");
   }
 
@@ -243,7 +244,7 @@ void Bot::carPS2(int velocidad)
   }
   else if (Button(PSB_PAD_DOWN))
   {
-    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(velocidad) :atras(velocidad);
+    BothButtons(PSB_PAD_DOWN, PSB_L1) ? adelante(velocidad) : atras(velocidad);
     Serial.print("atras");
   }
 
@@ -287,7 +288,7 @@ void Bot::seguidor(int Left, int Center, int Right, int velocidad)
   }
   else if ((IR_izquierda == blanco) && (IR_centro == negro) && (IR_derecha == negro))
   {
-     girar_derecha(velocidad);
+    girar_derecha(velocidad);
   }
   else if ((IR_izquierda == blanco) && (IR_centro == blanco) && (IR_derecha == blanco))
   {
@@ -299,4 +300,24 @@ void Bot::seguidor(int Left, int Center, int Right, int velocidad)
     adelante(velocidad);
     Serial.println("Adelante");
   }
+}
+
+bool Bot::toggle(int switchPin)
+{
+  static bool toggleState = false;
+  static bool lastToggleState = false;
+  static long toggleTimer = millis();
+
+  bool currentToggleState = digitalRead(switchPin);
+
+  if (millis() - toggleTimer > 100)
+  {
+    if (currentToggleState && !lastToggleState)
+    {
+      toggleState = !toggleState;
+      toggleTimer = millis();
+    }
+  }
+  lastToggleState = currentToggleState;
+  return toggleState;
 }

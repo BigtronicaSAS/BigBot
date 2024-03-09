@@ -2,6 +2,9 @@
 # Syntax Coloring Bigbot
 #######################################
 Bot	            KEYWORD1
+MAGIC_4WD       KEYWORD1
+MAGIC           KEYWORD1
+SOCCER          KEYWORD1
 seguidor        KEYWORD2
 adelante        KEYWORD2
 atras	        KEYWORD2

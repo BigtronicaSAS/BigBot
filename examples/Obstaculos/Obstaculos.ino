@@ -8,7 +8,7 @@
 /*Velocidad Bigbot 4WD: 180*/
 #define Velocidad 100 
 
-Bot bot(MAGIC);
+Bot bot(MAGIC_4WD);
 void setup() {
 }
 
