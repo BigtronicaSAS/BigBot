@@ -364,7 +364,7 @@ void PS2(Bot &bot) {
   do {
     bool state = bot.toggle(Switch);
 
-    if (!state) {
+    if (state==0) {
       Serial.println("Modo PS2");
       bot.carPS2(Velocidad);
       
