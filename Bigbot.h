@@ -19,10 +19,10 @@ struct Motion
 
 struct Bigbot
 {
+    Motion Adelante;
+	Motion Atras;
 	Motion Derecha;
 	Motion Izquierda;
-	Motion Adelante;
-	Motion Atras;
 };
 
 extern Bigbot MAGIC;

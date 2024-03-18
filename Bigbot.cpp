@@ -3,27 +3,29 @@
 #include "Bigbot.h"
 
 Bigbot SOCCER = {
-    .Derecha = {.MotorA = true, .MotorB = false},
-    .Izquierda = {.MotorA = false, .MotorB = true},
     .Adelante = {.MotorA = true, .MotorB = true},
-    .Atras = {.MotorA = false, .MotorB = false}
+    .Atras = {.MotorA = false, .MotorB = false},
+    .Derecha = {.MotorA = true, .MotorB = false},
+    .Izquierda = {.MotorA = false, .MotorB = true}
+
     };
 
 Bigbot MAGIC = {
-    .Derecha = {.MotorA = false, .MotorB = true},
-    .Izquierda = {.MotorA = true, .MotorB = false},
     .Adelante = {.MotorA = false, .MotorB = false},
-    .Atras = {.MotorA = true, .MotorB = true}
+    .Atras = {.MotorA = true, .MotorB = true},
+    .Derecha = {.MotorA = false, .MotorB = true},
+    .Izquierda = {.MotorA = true, .MotorB = false}
+
     };
 
 Bigbot MAGIC_4WD = SOCCER;
 
 Bot::Bot(Bigbot &bigbot = MAGIC)
-    : 
+    : Adelante(bigbot.Adelante),
+      Atras(bigbot.Atras),
       Derecha(bigbot.Derecha),
-      Izquierda(bigbot.Izquierda),
-      Adelante(bigbot.Adelante),
-      Atras(bigbot.Atras)
+      Izquierda(bigbot.Izquierda)
+
 {
   pin_echo = 8;
   pin_trigger = 7;
