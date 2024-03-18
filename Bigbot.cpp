@@ -338,10 +338,11 @@ void Start(Bot &bot, int minVelocidad=100, int Distancia = 30) {
 }
 void Obstaculo(Bot &bot, int minVelocidad = 100, int Distancia = 30)
 {
+  Serial.begin(9600);
   do
-  {
+  { Serial.println("Modo Ultrasonido");
     bot.obstaculos(Distancia, minVelocidad);
-  } while (true)
+  } while (true);
 }
 
 void Seguidor(Bot &bot, int minVelocidad = 100)
@@ -354,7 +355,6 @@ void Seguidor(Bot &bot, int minVelocidad = 100)
   pinMode(Right, INPUT);
   pinMode(Center, INPUT);
   pinMode(Left, INPUT);
-  pinMode(Switch, INPUT_PULLUP);
 
   do
   {
