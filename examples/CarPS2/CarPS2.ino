@@ -5,7 +5,7 @@
 
 // Configuracion Propia
 /*Bigbot CAR = {
-    {LOW, LOW},  //-----> Adelante
+    {HIGH, HIGH},  //-----> Adelante
     {LOW, LOW}   //-----> Atras
     {HIGH, LOW}, //-----> Derecha
     {LOW, HIGH}, //-----> Izquierda
