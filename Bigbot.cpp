@@ -3,50 +3,35 @@
 #include "Bigbot.h"
 
 Bigbot SOCCER = {
-    .l298P = {
-        .MotorA_speed = 10,
-        .MotorA_direction = 12,
-        .MotorB_speed = 11,
-        .MotorB_direction = 13,
-        .pin_echo = 8,
-        .pin_trigger = 7,
-        .pin_buzzer = 4},
-
     .Derecha = {.MotorA = true, .MotorB = false},
     .Izquierda = {.MotorA = false, .MotorB = true},
     .Adelante = {.MotorA = true, .MotorB = true},
-    .Atras = {.MotorA = false, .MotorB = false}};
+    .Atras = {.MotorA = false, .MotorB = false}
+    };
 
 Bigbot MAGIC = {
-    .l298P = {
-        .MotorA_speed = 10,
-        .MotorA_direction = 12,
-        .MotorB_speed = 11,
-        .MotorB_direction = 13,
-        .pin_echo = 8,
-        .pin_trigger = 7,
-        .pin_buzzer = 4},
-
     .Derecha = {.MotorA = false, .MotorB = true},
     .Izquierda = {.MotorA = true, .MotorB = false},
     .Adelante = {.MotorA = false, .MotorB = false},
-    .Atras = {.MotorA = true, .MotorB = true}};
+    .Atras = {.MotorA = true, .MotorB = true}
+    };
 
 Bigbot MAGIC_4WD = SOCCER;
 
-Bot::Bot(Bigbot &bigbot)
-    : MotorA_speed(bigbot.l298P.MotorA_speed),
-      MotorA_direction(bigbot.l298P.MotorA_direction),
-      MotorB_speed(bigbot.l298P.MotorB_speed),
-      MotorB_direction(bigbot.l298P.MotorB_direction),
-      pin_echo(bigbot.l298P.pin_echo),
-      pin_trigger(bigbot.l298P.pin_trigger),
-      pin_buzzer(bigbot.l298P.pin_buzzer),
+Bot::Bot(Bigbot &bigbot = MAGIC)
+    : 
       Derecha(bigbot.Derecha),
       Izquierda(bigbot.Izquierda),
       Adelante(bigbot.Adelante),
       Atras(bigbot.Atras)
 {
+  pin_echo = 8;
+  pin_trigger = 7;
+  pin_buzzer = 4;
+  MotorA_speed = 10;
+  MotorA_direction = 12;
+  MotorB_speed = 11;
+  MotorB_direction = 13;
   Serial.begin(9600);
   pinMode(pin_echo, INPUT);
   pinMode(pin_trigger, OUTPUT);
@@ -129,7 +114,11 @@ void Bot::obstaculos(int MaximaDistancia, int velocidad)
   {
     if (distance < MaximaDistancia)
     {
+      Serial.print("Rutina de Obstaculo, MaximaDistancia: ");
+      Serial.println(MaximaDistancia);
       parar();
+      delay(500);
+      atras(velocidad);
       delay(500);
       // Generar un número aleatorio para decidir la dirección de giro
       randomNumber = random(1, 3);
@@ -322,11 +311,10 @@ bool Bot::toggle(int switchPin)
   return toggleState;
 }
 
-void Start(Bot &bot) {
+void Start(Bot &bot, int minVelocidad=100, int Distancia = 30) {
   const int Right = A0;
   const int Center = A1;
   const int Left = A2;
-  const int Velocidad = 100;
   const int Switch = A4;
  
   Serial.begin(9600);
@@ -340,22 +328,61 @@ void Start(Bot &bot) {
 
     if (!state) {
       Serial.println("Modo Ultrasonido");
-      bot.obstaculos(30, Velocidad);
+      bot.obstaculos(Distancia, minVelocidad);
     } else {
       Serial.println("Modo seguidor de linea");
-      bot.seguidor(Left, Center, Right, Velocidad);
+      bot.seguidor(Left, Center, Right, minVelocidad);
     }
 
   } while (true);
 }
+void Obstaculo(Bot &bot, int minVelocidad = 100, int Distancia = 30)
+{
+  do
+  {
+    bot.obstaculos(Distancia, minVelocidad);
+  } while (true)
+}
 
+void Seguidor(Bot &bot, int minVelocidad = 100)
+{
+  const int Right = A0;
+  const int Center = A1;
+  const int Left = A2;
 
-void PS2(Bot &bot) {
+  Serial.begin(9600);
+  pinMode(Right, INPUT);
+  pinMode(Center, INPUT);
+  pinMode(Left, INPUT);
+  pinMode(Switch, INPUT_PULLUP);
+
+  do
+  {
+    bot.seguidor(Left, Center, Right, minVelocidad);
+
+  } while (true);
+}
+
+void PS2(Bot &bot, int minVelocidad=100) {
   int pin_clock = A3;
   int pin_command = A1;
   int pin_attention = A0;
   int pin_data = A2;
-  int Velocidad = 100;
+  int MaximaDistancia = 30;
+  bot.controlPS2(pin_clock , pin_command, pin_attention, pin_data);
+
+  do {
+      Serial.println("Modo PS2");
+      bot.carPS2(minVelocidad);
+  } while (true);
+
+}
+
+void PS2_Toggle(Bot &bot, int minVelocidad=100) {
+  int pin_clock = A3;
+  int pin_command = A1;
+  int pin_attention = A0;
+  int pin_data = A2;
   int MaximaDistancia = 30;
   const int Switch = A4;
   bot.controlPS2(pin_clock , pin_command, pin_attention, pin_data);
@@ -366,11 +393,11 @@ void PS2(Bot &bot) {
 
     if (state==0) {
       Serial.println("Modo PS2");
-      bot.carPS2(Velocidad);
+      bot.carPS2(minVelocidad);
       
     } else {
       Serial.println("Modo Obstaculos");
-      bot.obstaculos(MaximaDistancia, Velocidad);
+      bot.obstaculos(MaximaDistancia, minVelocidad);
     }
 
   } while (true);

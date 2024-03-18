@@ -1,9 +1,18 @@
 #include <Bigbot.h>
-// #define CAR MAGIC
-// #define CAR MAGIC_4WD
-#define CAR SOCCER
+//#define CAR MAGIC_4WD
+//#define CAR SOCCER
 
-Bot bot(CAR);
+
+// Configuracion Propia
+/*Bigbot CAR = {
+    {LOW, LOW},  //-----> Adelante
+    {LOW, LOW}   //-----> Atras
+    {HIGH, LOW}, //-----> Derecha
+    {LOW, HIGH}, //-----> Izquierda
+}; */
+
+
+Bot bot;
 void setup() {
 PS2(bot);
 }

@@ -15,20 +15,10 @@ struct Motion
 	bool MotorA, MotorB;
 };
 
-struct Shield
-{
-	int MotorA_speed,
-		MotorA_direction,
-		MotorB_speed,
-		MotorB_direction,
-		pin_echo,
-		pin_trigger,
-		pin_buzzer;
-};
+
 
 struct Bigbot
 {
-	Shield l298P;
 	Motion Derecha;
 	Motion Izquierda;
 	Motion Adelante;
@@ -42,7 +32,7 @@ extern Bigbot MAGIC_4WD;
 class Bot : public PS2X
 {
 public:
-	Bot(Bigbot &bigbot);
+	Bot(Bigbot &bigbot = MAGIC);
 	void seguidor(int Left, int Center, int Right, int velocidad);
 	void adelante(int velocidad);
 	void atras(int velocidad);
@@ -69,7 +59,10 @@ private:
 	Motion Adelante;
 	Motion Atras;
 };
-void Start(Bot &bot);
-void PS2(Bot &bot);
+void Start(Bot &bot, int minVelocidad=100, int Distancia = 30);
+void PS2(Bot &bot, int minVelocidad=100);
+void PS2_Toggle(Bot &bot, int minVelocidad=100);
+void Obstaculo(Bot &bot, int minVelocidad=100, int Distancia = 30);
+void Seguidor(Bot &bot, int minVelocidad=100);
 
 #endif
